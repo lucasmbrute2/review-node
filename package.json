@@ -1,0 +1,24 @@
+{
+	"name": "review-node",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node index"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lucasmbrute2/review-node.git"
+	},
+	"keywords": [],
+	"author": "Lucas Souza",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/lucasmbrute2/review-node/issues"
+	},
+	"homepage": "https://github.com/lucasmbrute2/review-node#readme",
+	"dependencies": {
+		"nodemon": "^2.0.15"
+	}
+}
