@@ -42,6 +42,20 @@ app.get("/getProducts/:id", (req, res) => {
 	return res.json(productId);
 });
 
+app.put("/product/:id", (req, res) => {
+	const { id } = req.params;
+	const { name, price } = req.body;
+
+	const productIndex = products.findIndex((product) => product.id === id);
+
+	const body = (products[productIndex] = {
+		...products[productIndex],
+		name,
+		price,
+	});
+	return res.json(body);
+});
+
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
 });
