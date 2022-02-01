@@ -1,11 +1,24 @@
 const http = require("http");
 
-const server = http
-	.createServer((req, res) => {
-		res.writeHead(200, { "Content-Type": "application/json" });
+http.createServer((req, res) => {
+	res.writeHead(200, { "Content-Type": "application/json" });
 
-		res.end("Hello World!");
-	})
-	.listen(3000, () => {
-		console.log("Server is running");
-	});
+	if (req.url === "/produto") {
+		res.end("Rota de produto");
+	}
+
+	if (req.url === "/usuario") {
+		res.end(
+			JSON.stringify({
+				message: "Rota de usuario",
+			})
+		);
+	}
+	res.end(
+		JSON.stringify({
+			message: "Qualquer coisa",
+		})
+	);
+}).listen(3000, () => {
+	console.log("Server is running");
+});
