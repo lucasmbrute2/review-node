@@ -32,9 +32,14 @@ app.post("/products", (req, res) => {
 });
 
 app.get("/getProducts", (req, res) => {
-	res.json({
-		data: products,
-	});
+	return res.json(products);
+});
+
+app.get("/getProducts/:id", (req, res) => {
+	const { id } = req.params;
+	const productId = products.find((product) => product.id === id);
+	console.log(productId);
+	return res.json(productId);
 });
 
 app.listen(port, () => {
