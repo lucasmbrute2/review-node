@@ -35,7 +35,7 @@ app.post("/products", (req, res) => {
 	};
 	products.push(product);
 
-	createFile();
+	productFile();
 	return res.json(product);
 });
 
@@ -61,7 +61,7 @@ app.put("/products/:id", (req, res) => {
 		name,
 		price,
 	});
-	createFile();
+	productFile();
 
 	return res.json(body);
 });
@@ -73,10 +73,11 @@ app.delete("/products/:id", (req, res) => {
 
 	products.splice(productIndex, 1);
 
+	productFile();
 	res.json("Produto removido com sucesso!");
 });
 
-function createFile() {
+function productFile() {
 	fs.writeFile("product.json", JSON.stringify(products), (err) => {
 		if (err) console.log(err);
 		else console.log("Produto inserido");
