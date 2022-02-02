@@ -1,5 +1,9 @@
+/*Formas de passar os dados::
+ *Body => Sempre que eu quiser enviar dados para minha aplicação
+ *Params => /product/482482
+ *Query=> /product?id=9429492
+ */
 const express = require("express");
-const products = require("./db/products");
 const app = express();
 const { randomUUID } = require("crypto");
 const fs = require("fs");
@@ -7,11 +11,12 @@ const fs = require("fs");
 app.use(express.json());
 port = 3001;
 
-/*Formas de passar os dados::
- *Body => Sempre que eu quiser enviar dados para minha aplicação
- *Params => /product/482482
- *Query=> /product?id=9429492
- */
+let products = [];
+
+fs.readFile("product.json", "utf-8", (err, data) => {
+	if (err) console.log(err);
+	else products = JSON.parse(data);
+});
 
 app.get("/", (req, res) => {
 	console.log(products);
@@ -30,11 +35,7 @@ app.post("/products", (req, res) => {
 	};
 	products.push(product);
 
-	fs.writeFile("product.json", JSON.stringify(product), (err) => {
-		if (err) console.log(err);
-		else console.log("Produto inserido");
-	});
-
+	createFile();
 	return res.json(product);
 });
 
@@ -60,6 +61,8 @@ app.put("/products/:id", (req, res) => {
 		name,
 		price,
 	});
+	createFile();
+
 	return res.json(body);
 });
 
@@ -72,6 +75,13 @@ app.delete("/products/:id", (req, res) => {
 
 	res.json("Produto removido com sucesso!");
 });
+
+function createFile() {
+	fs.writeFile("product.json", JSON.stringify(products), (err) => {
+		if (err) console.log(err);
+		else console.log("Produto inserido");
+	});
+}
 
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
