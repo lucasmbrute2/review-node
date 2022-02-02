@@ -2,6 +2,7 @@ const express = require("express");
 const products = require("./db/products");
 const app = express();
 const { randomUUID } = require("crypto");
+const fs = require("fs");
 
 app.use(express.json());
 port = 3001;
@@ -28,21 +29,27 @@ app.post("/products", (req, res) => {
 		id: randomUUID(),
 	};
 	products.push(product);
+
+	fs.writeFile("product.json", JSON.stringify(product), (err) => {
+		if (err) console.log(err);
+		else console.log("Produto inserido");
+	});
+
 	return res.json(product);
 });
 
-app.get("/getProducts", (req, res) => {
+app.get("/products", (req, res) => {
 	return res.json(products);
 });
 
-app.get("/getProducts/:id", (req, res) => {
+app.get("/products/:id", (req, res) => {
 	const { id } = req.params;
 	const productId = products.find((product) => product.id === id);
 	console.log(productId);
 	return res.json(productId);
 });
 
-app.put("/product/:id", (req, res) => {
+app.put("/products/:id", (req, res) => {
 	const { id } = req.params;
 	const { name, price } = req.body;
 
@@ -56,7 +63,7 @@ app.put("/product/:id", (req, res) => {
 	return res.json(body);
 });
 
-app.delete("/product/:id", (req, res) => {
+app.delete("/products/:id", (req, res) => {
 	const { id } = req.params;
 
 	const productIndex = products.findIndex((product) => product.id === id);
