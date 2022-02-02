@@ -56,6 +56,16 @@ app.put("/product/:id", (req, res) => {
 	return res.json(body);
 });
 
+app.delete("/product/:id", (req, res) => {
+	const { id } = req.params;
+
+	const productIndex = products.findIndex((product) => product.id === id);
+
+	products.splice(productIndex, 1);
+
+	res.json("Produto removido com sucesso!");
+});
+
 app.listen(port, () => {
 	console.log(`Server is running on port ${port}`);
 });
